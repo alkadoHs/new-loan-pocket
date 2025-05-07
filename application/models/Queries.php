@@ -5448,29 +5448,5 @@ return $data->row();
 		return $customer->result(); 
 	}
 	
-
-	public function get_employee_permissions($empl_id) {
-        $this->db->select('system_links.url, system_links.action');
-        $this->db->from('employee_links');
-        $this->db->join('system_links', 'system_links.id = employee_links.link_id');
-        $this->db->where('employee_links.empl_id', $empl_id);
-        return $this->db->get()->result_array();
-    }
-
-    // Check if user has a specific permission
-    public function has_permission($empl_id, $url, $action) {
-        $this->db->where(['url' => $url, 'action' => $action]);
-        $this->db->join('employee_links', 'system_links.id = employee_links.link_id');
-        $this->db->where('employee_links.empl_id', $empl_id);
-        return $this->db->count_all_results('system_links') > 0;
-    }
 	
-	public function get_all_links() {
-		// Return the result from the 'system_links' table
-		return $this->db->get('system_links')->result();
-	}
-	public function insert_permission($data)
-{
-    return $this->db->insert('tbl_permission', $data);
-}
 }
