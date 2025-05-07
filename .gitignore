@@ -8,6 +8,8 @@ application/logs/*
 
 !application/*/.htaccess
 
+.env
+
 node_modules/
 
 composer.lock

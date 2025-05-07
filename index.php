@@ -1,4 +1,7 @@
 <?php
+
+require_once  './application/helpers/env_helper.php';
+
 /**
  * CodeIgniter
  *
@@ -231,6 +234,9 @@ switch (ENVIRONMENT)
 
 	// Name of the "system" directory
 	define('SYSDIR', basename(BASEPATH));
+
+	load_env();
+
 
 	// The path to the "application" directory
 	if (is_dir($application_folder))
