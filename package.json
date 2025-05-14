@@ -6,7 +6,8 @@
     "vanilla-calendar-pro": "^3.0.4"
   },
   "scripts": {
-    "watch": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch"
+    "watch": "npx @tailwindcss/cli -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "server": "php -S localhost:8000"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.10"
