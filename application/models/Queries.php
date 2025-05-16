@@ -5383,7 +5383,6 @@ return $data->row();
 
 
 
-
  //Admin login
 	public function user_data($comp_phone, $password){
 		$data = $this->db->where(['comp_phone'=>$comp_phone,'password'=>$password])

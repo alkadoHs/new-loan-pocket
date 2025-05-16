@@ -39,7 +39,7 @@
 
 <body class="bg-gray-50 dark:bg-gray-900 font-poppins">
   
-  <?php include_once APPPATH . 'views/partials/navbar.php'; ?>
+  <!-- <?php include_once APPPATH . 'views/partials/navbar.php'; ?> -->
 
   <!-- ========== MAIN CONTENT ========== -->
   <!-- Breadcrumb -->
