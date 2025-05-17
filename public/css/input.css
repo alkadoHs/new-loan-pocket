@@ -7,6 +7,36 @@
   --font-poppins: "Poppins", sans-serif; 
 }
 
+.input-select-preline { /* For Preline Selects, JS does the main styling */
+  /* Basic fallback styles */
+  @apply py-2.5 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300;
+}
+.input-text-preline {
+@apply py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600;
+}
+.label-sm-dt { @apply block text-sm font-medium mb-1 dark:text-gray-300; }
+.th-dt { @apply py-3 px-6 text-start; }
+.th-dt span { @apply text-xs font-semibold uppercase text-gray-500 dark:text-gray-400; }
+.sort-icon-dt { @apply size-3.5 fill-current text-gray-400 dark:text-gray-500 ms-1; }
+.td-dt { @apply px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200; }
+.btn-action-sm { @apply py-1.5 px-2.5 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700; }
+/* Removed .dropdown-menu-sm as it contained Preline classes */
+.dropdown-header-sm { @apply block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-gray-500; }
+.dropdown-item-sm { @apply flex items-center gap-x-3 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-cyan-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300; }
+.icon-sm { @apply shrink-0 size-4; }
+.modal-content-dt { @apply flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700; }
+.modal-header-dt { @apply flex justify-between items-center py-3 px-4 border-b dark:border-gray-700; }
+.modal-title-dt { @apply font-bold text-gray-800 dark:text-white; }
+.btn-close-modal-dt { @apply flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700; }
+.modal-close-icon-dt { @apply shrink-0 size-4; }
+.modal-footer-dt { @apply mt-6 flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700; }
+.btn-primary-sm { @apply py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent disabled:opacity-50 disabled:pointer-events-none; }
+.btn-secondary-sm { @apply py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700; }
+.dt-empty-message { @apply py-10 px-5 flex flex-col justify-center items-center text-center; }
+.dt-paging-controls { @apply py-3 px-4 border-t border-gray-200 dark:border-gray-700 hidden; }
+.btn-ghost-dt { @apply min-w-10 h-10 inline-flex justify-center items-center text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 py-2.5 text-sm rounded-full disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:focus:bg-gray-700 dark:hover:bg-gray-700; }
+.input-search-dt { @apply py-2 px-3 ps-9 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:placeholder-gray-500 dark:focus:ring-gray-600; }
+
 
 /* States */
 @custom-variant hs-success {

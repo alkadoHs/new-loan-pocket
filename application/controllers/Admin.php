@@ -380,38 +380,54 @@ class Admin extends CI_Controller {
 
 
 	public function create_capital(){
-		$this->form_validation->set_rules('comp_id','company','required');
-		$this->form_validation->set_rules('share_id','share name','required');
-		$this->form_validation->set_rules('amount','Amount','required');
-		$this->form_validation->set_rules('recept','recept');
-		$this->form_validation->set_rules('chaque_no','chaque');
-		$this->form_validation->set_rules('pay_method','pay method','required');
-		$this->form_validation->set_error_delimiters('<div class="text-danger">','</div>');
+		// Field name, Label for errors, Validation rules
+		$this->form_validation->set_rules('comp_id','Company ID','required'); // Label made more descriptive
+		$this->form_validation->set_rules('share_id','Share Holder Name','required'); // Label made more descriptive
+		$this->form_validation->set_rules('amount','Amount','required|numeric'); // Added numeric validation
+		$this->form_validation->set_rules('recept','Receipt Number','trim'); // Added trim as a basic rule
+		$this->form_validation->set_rules('chaque_no','Cheque Number','trim'); // Added trim as a basic rule
+		$this->form_validation->set_rules('pay_method','Payment Method','required'); // Label made more descriptive
+		
+		$this->form_validation->set_error_delimiters('<div class="text-danger">','</div>'); // This is fine for Bootstrap, for Tailwind use the <p> tags we discussed
+	
 		if ($this->form_validation->run()) {
-			  $data = $this->input->post();
-			  $amount = $data['amount'];
-			  $comp_id = $data['comp_id'];
-			  $pay_method = $data['pay_method'];
-			  $trans_id = $pay_method;
-			     // print_r($pay_method);
-			     //     exit();
-			  $this->load->model('queries');
-			  if ($this->queries->insert_capital($data)) {
-			  	$acount = $this->queries->get_remain_company_balance($trans_id);
-			  	$old_comp_balance = $acount->comp_balance;
-			  	$total_remain = $old_comp_balance + $amount;
-			  	   if ($acount->comp_id == $comp_id and $acount->trans_id == $pay_method) {
-			  	  $this->update_company_balance($comp_id,$total_remain,$pay_method); 
-			  	   }else{
-			  	$this->insert_company_balance($comp_id,$amount,$pay_method);
-			  	   }
-			  	   $this->session->set_flashdata('massage','capital Added successfully');
-			  }else{
-			  	$this->session->set_flashdata('error','Failed');
-			  }
-			  return redirect('admin/capital');
+			$data = $this->input->post();
+			$amount = $data['amount'];
+			$comp_id = $data['comp_id'];
+			$pay_method = $data['pay_method'];
+			$trans_id = $pay_method; // Assuming pay_method is the transaction account ID
+	
+			$this->load->model('queries');
+			if ($this->queries->insert_capital($data)) {
+				$acount = $this->queries->get_remain_company_balance($trans_id);
+	
+				// It's good to check if $acount is not null before accessing its properties
+				if ($acount) {
+					$old_comp_balance = $acount->comp_balance;
+					$total_remain = $old_comp_balance + $amount;
+	
+					// The condition here might be redundant if get_remain_company_balance already filters by comp_id and trans_id
+					// However, it doesn't hurt to be explicit.
+					if ($acount->comp_id == $comp_id && $acount->trans_id == $pay_method) {
+						$this->update_company_balance($comp_id, $total_remain, $pay_method); 
+					} else {
+						// This 'else' case seems unlikely if get_remain_company_balance is designed to fetch the specific account.
+						// It might imply that no previous balance record exists for this pay_method for this company.
+						$this->insert_company_balance($comp_id, $amount, $pay_method); // Assuming $amount is the initial balance
+					}
+				} else {
+					// No existing balance record found for this pay_method, so insert a new one.
+					$this->insert_company_balance($comp_id, $amount, $pay_method); // Assuming $amount is the initial balance
+				}
+	
+				$this->session->set_flashdata('massage','Capital Added successfully');
+			} else {
+				$this->session->set_flashdata('error','Failed to add capital.'); // More descriptive error
+			}
+			return redirect('admin/capital');
 		}
-		$this->capital();
+		// If validation fails, reload the capital view (it will show errors)
+		$this->capital(); 
 	}
 
 
