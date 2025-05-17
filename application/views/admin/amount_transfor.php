@@ -3,7 +3,7 @@
 
 include_once APPPATH . "views/partials/header.php";
 
-// --- DUMMY DATA - REMOVE AND LOAD FROM YOUR CONTROLLER ---
+// --- DUMMY DATA ---
 // Your controller should pass:
 // $account: array of account objects (trans_id, account_name) for "From" and "To" account dropdowns
 // $blanch: array of branch objects (blanch_id, blanch_name) for "To Branch" dropdown
@@ -11,32 +11,32 @@ include_once APPPATH . "views/partials/header.php";
 // $sum_froat: object with 'cashFloat' property
 // $sum_chargers: object with 'total_chargers' property
 
-if (!isset($account)) {
-    $account = [
-        (object)['trans_id' => 1, 'account_name' => 'Main Company Account'],
-        (object)['trans_id' => 2, 'account_name' => 'Operational Account'],
-        (object)['trans_id' => 10, 'account_name' => 'NMB Bank (Branch Default)'],
-        (object)['trans_id' => 11, 'account_name' => 'Cash In Hand (Branch Default)'],
-    ];
-}
-if (!isset($blanch)) {
-    $blanch = [
-        (object)['blanch_id' => 101, 'blanch_name' => 'HQ Branch'],
-        (object)['blanch_id' => 102, 'blanch_name' => 'Northern Zone Branch'],
-    ];
-}
-if (!isset($float)) {
-    $float = [
-        (object)['trans_id' => 201, 'comp_id' => 1, 'from_account' => 'Main Company Account', 'blanch_amount' => 500000, 'blanch_id' => 101, 'blanch_name' => 'HQ Branch', 'to_account' => 'NMB Bank (Branch Default)', 'charger' => 500, 'trans_day' => '2023-10-26'],
-        (object)['trans_id' => 202, 'comp_id' => 1, 'from_account' => 'Operational Account', 'blanch_amount' => 300000, 'blanch_id' => 102, 'blanch_name' => 'Northern Zone Branch', 'to_account' => 'Cash In Hand (Branch Default)', 'charger' => 100, 'trans_day' => '2023-10-27'],
-    ];
-}
-if (!isset($sum_froat)) {
-    $sum_froat = (object)['cashFloat' => 800000];
-}
-if (!isset($sum_chargers)) {
-    $sum_chargers = (object)['total_chargers' => 600];
-}
+// if (!isset($account)) {
+//     $account = [
+//         (object)['trans_id' => 1, 'account_name' => 'Main Company Account'],
+//         (object)['trans_id' => 2, 'account_name' => 'Operational Account'],
+//         (object)['trans_id' => 10, 'account_name' => 'NMB Bank (Branch Default)'],
+//         (object)['trans_id' => 11, 'account_name' => 'Cash In Hand (Branch Default)'],
+//     ];
+// }
+// if (!isset($blanch)) {
+//     $blanch = [
+//         (object)['blanch_id' => 101, 'blanch_name' => 'HQ Branch'],
+//         (object)['blanch_id' => 102, 'blanch_name' => 'Northern Zone Branch'],
+//     ];
+// }
+// if (!isset($float)) {
+//     $float = [
+//         (object)['trans_id' => 201, 'comp_id' => 1, 'from_account' => 'Main Company Account', 'blanch_amount' => 500000, 'blanch_id' => 101, 'blanch_name' => 'HQ Branch', 'to_account' => 'NMB Bank (Branch Default)', 'charger' => 500, 'trans_day' => '2023-10-26'],
+//         (object)['trans_id' => 202, 'comp_id' => 1, 'from_account' => 'Operational Account', 'blanch_amount' => 300000, 'blanch_id' => 102, 'blanch_name' => 'Northern Zone Branch', 'to_account' => 'Cash In Hand (Branch Default)', 'charger' => 100, 'trans_day' => '2023-10-27'],
+//     ];
+// }
+// if (!isset($sum_froat)) {
+//     $sum_froat = (object)['cashFloat' => 800000];
+// }
+// if (!isset($sum_chargers)) {
+//     $sum_chargers = (object)['total_chargers' => 600];
+// }
 // --- END DUMMY DATA ---
 ?>
 
