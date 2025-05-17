@@ -1,800 +1,492 @@
-<?php include('incs/header_1.php'); ?>
-<?php include('incs/side_1.php'); ?>
-<?php include('incs/subheader.php'); ?>
-	
-<style>
-    .select2-container .select2-selection--single{
-    height:37px !important;
-}
-.select2-container--default .select2-selection--single{
-         border: 1px solid #ccc !important; 
-     border-radius: 0px !important; 
-}
-</style>
+<?php
 
-<div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">					
-<!-- begin:: Subheader -->
-<div class="kt-subheader   kt-grid__item" id="kt_subheader">
-   
-</div>
-<!-- end:: Subheader -->										
-<!-- begin:: Content -->
-<!-- begin:: Content -->
+include_once APPPATH . "views/partials/header.php";
+
+// --- DUMMY DATA - REMOVE AND LOAD FROM CONTROLLER ---
+// if (!isset($fee_category)) { // For the list of fee categories (usually one)
+//     // Simulating that 'GENERAL' is the currently selected category for display logic
+//     $fee_category = [(object)['id' => 1, 'fee_category' => 'GENERAL', 'comp_id' => ($_SESSION['comp_id'] ?? null)]];
+// }
+// // This variable determines which main section is shown
+// $fee_category_data = null;
+// if (!empty($fee_category)) {
+//     // Assuming $fee_category array contains the active setting.
+//     // In a real scenario, you'd fetch the single active setting.
+//     $fee_category_data = $fee_category[0];
+// }
 
 
-<div class="kt-content  kt-grid__item kt-grid__item--fluid" id="kt_content">
-	<!--begin::Portlet-->
-	<?php if ($das = $this->session->flashdata('massage')): ?>
-	  <div class="alert alert-success fade show alert-success" role="alert">
-                            <div class="alert-icon"><i class="flaticon2-check-mark"></i></div>
-                            <div class="alert-text"><?php echo $das;?></div>
-                            <div class="alert-close">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                    <span aria-hidden="true"><i class="la la-close"></i></span>
-                                </button>
+// Dummy data for "LOAN PRODUCT" section
+// if (!isset($loan_category)) { // List of loan products/categories
+//     $loan_category = [
+//         (object)['category_id' => 1, 'loan_name' => 'Personal Loan', 'loan_price' => 50000, 'loan_perday' => 500000, 'interest_formular' => 10, 'fee_category_type' => 'MONEY', 'fee_value' => 5000],
+//         (object)['category_id' => 2, 'loan_name' => 'Business Loan', 'loan_price' => 500001, 'loan_perday' => 2000000, 'interest_formular' => 8, 'fee_category_type' => 'PERCENTAGE', 'fee_value' => 1.5],
+//     ];
+// }
+
+// Dummy data for "GENERAL" section
+// if (!isset($fee_type)) { // The selected general fee type (usually one)
+//     // Simulating that 'PERCENTAGE VALUE' is the active type
+//     $fee_type = (object)['id' => 1, 'type' => 'PERCENTAGE VALUE', 'comp_id' => ($_SESSION['comp_id'] ?? null)];
+// }
+// if(!isset($fee_data)){ // This seems to be the same as $fee_type in your original code for the list
+//     $fee_data = isset($fee_type) ? [$fee_type] : [];
+// }
+
+// if (!isset($loan_fee)) { // List of general loan fees
+//     $loan_fee = [
+//         (object)['fee_id' => 101, 'description' => 'Application Fee', 'fee_interest' => 50],
+//         (object)['fee_id' => 102, 'description' => 'Processing Fee', 'fee_interest' => 0.5],
+//     ];
+// }
+// --- END DUMMY DATA ---
+?>
+
+<!-- ========== MAIN CONTENT BODY ========== -->
+<div class="w-full lg:ps-64">
+    <div class="p-4 sm:p-6 space-y-6">
+
+        <!-- Page Title -->
+        <div class="mb-6">
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-gray-200">
+                Loan Fee Settings
+            </h2>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Configure loan fee categories and specific fees.
+            </p>
+        </div>
+
+        <?php // Flash Messages ?>
+        <?php if ($das = $this->session->flashdata('massage')): ?>
+        <div class="bg-teal-100 border border-teal-200 text-sm text-teal-800 rounded-lg p-4 dark:bg-teal-800/10 dark:border-teal-900 dark:text-teal-500" role="alert">
+            <div class="flex">
+                <div class="flex-shrink-0"><span class="inline-flex justify-center items-center size-8 rounded-full border-4 border-teal-100 bg-teal-200 text-teal-800 dark:border-teal-900 dark:bg-teal-800 dark:text-teal-500"><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg></span></div>
+                <div class="ms-3"><h3 class="text-gray-800 font-semibold dark:text-white">Success</h3><p class="mt-2 text-sm text-gray-700 dark:text-gray-400"><?php echo $das;?></p></div>
+                <div class="ps-3 ms-auto"><div class="-mx-1.5 -my-1.5"><button type="button" class="inline-flex bg-teal-50 rounded-lg p-1.5 text-teal-500 hover:bg-teal-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-teal-50 focus:ring-teal-600 dark:bg-transparent dark:hover:bg-teal-800/50 dark:text-teal-600" data-hs-remove-element="[role=alert]"><span class="sr-only">Dismiss</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></svg></button></div></div>
+            </div>
+        </div>
+        <?php endif; ?>
+
+
+        <!-- Section: Loan Fee Category Setup -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Card: ADD LOAN FEE CATEGORY Form -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 md:p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                        Set Loan Fee Category
+                    </h3>
+                    <?php echo form_open("admin/create_loanfee_category", ['novalidate' => true]); ?>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="fee_category_select" class="block text-sm font-medium mb-2 dark:text-gray-300">Loan Fee Category*:</label>
+                                <select id="fee_category_select" name="fee_category" required
+                                        data-hs-select='{
+                                            "placeholder": "---Select Loan fee Category---",
+                                            "toggleTag": "<button type=\"button\" aria-expanded=\"false\"><span class=\"me-2\" data-icon></span><span class=\"text-gray-800 dark:text-gray-200\" data-title></span></button>",
+                                            "toggleClasses": "hs-select-disabled:pointer-events-none hs-select-disabled:opacity-50 relative py-2.5 px-4 pe-9 flex text-nowrap w-full cursor-pointer bg-white border border-gray-200 rounded-lg text-start text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:focus:ring-gray-600",
+                                            "dropdownClasses": "mt-2 max-h-72 pb-1 px-1 space-y-0.5 z-50 w-full bg-white border border-gray-200 rounded-lg overflow-hidden overflow-y-auto dark:bg-gray-800 dark:border-gray-700",
+                                            "optionClasses": "py-2 px-4 w-full text-sm text-gray-800 cursor-pointer hover:bg-gray-100 rounded-lg focus:outline-none focus:bg-gray-100 dark:hover:bg-gray-700 dark:text-gray-200 dark:focus:bg-gray-700",
+                                            "optionTemplate": "<div><div class=\"flex items-center\"><div class=\"me-2\" data-icon></div><div class=\"text-gray-800 dark:text-gray-200\" data-title></div></div></div>",
+                                            "extraMarkup": "<div class=\"absolute top-1/2 end-3 -translate-y-1/2\"><svg class=\"shrink-0 size-3.5 text-gray-500 dark:text-gray-500\" xmlns=\"http://www.w3.org/2000/svg\" width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"m7 15 5 5 5-5\"/><path d=\"m7 9 5-5 5 5\"/></svg></div>"
+                                          }'>
+                                    <option value="">---Select Loan fee Category---</option>
+                                    <option value="LOAN PRODUCT" <?php echo set_select('fee_category', 'LOAN PRODUCT'); ?>>Loan Fee By Loan Product</option>
+                                    <option value="GENERAL" <?php echo set_select('fee_category', 'GENERAL'); ?>>Loan Fee By General</option>
+                                </select>
+                                <?php echo form_error("fee_category", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
                             </div>
-                  </div>
-         <?php endif; ?>
-
-
-
-<div class="row">
-	<div class="col-lg-6">
-		<div class="kt-portlet">
-			<div class="kt-portlet__head">
-				<div class="kt-portlet__head-label">
-					<h3 class="kt-portlet__head-title">
-						ADD LOAN FEE CATEGORY
-					</h3>
-				</div>
-			</div>
-			<!--begin::Form-->
-			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
-				<?php echo form_open("admin/create_loanfee_category",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
-				<div class="kt-portlet__body">
-					<div class="kt-section">
-						<div class="kt-section__content">
-							<div class="form-group form-group-last row">
-								<div class="col-lg-12 form-group-sub">
-									<label class="form-control-label">Loan Fee Category*:</label>
-									<select type="text" name="fee_category" class="form-control" required>
-										<option value="">---Select Loan fee Category---</option>
-										<option value="LOAN PRODUCT">Loan Fee By Loan Product</option>
-										<option value="GENERAL">Loan Fee By General</option>
-									</select>
-								</div>
-								
-								<input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="kt-portlet__foot">
-					<div class="kt-form__actions">
-						<div class="row">
-							<div class="col-lg-12">
-								<?php if ($fee_category == TRUE) {
-								 ?>
-								<?php }elseif($fee_category == FALSE){ ?>
-								<div class="text-center">
-								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Save</button>
-								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
-								</div>
-								<?php } ?>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php echo form_close(); ?>
-			<!--end::Form-->
-		</div>
-		<!--end::Portlet-->
-	</div>
-	<div class="col-lg-6">
-		<div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-				LOAN FEE CATEGORY
-			</h3>
-		</div>
-		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
-
-	
-		<!-- &nbsp;
-		<a href="#" class="btn btn-brand btn-elevate btn-icon-sm">
-			<i class="la la-plus"></i>
-			New Record
-		</a> -->
-	</div>	
-</div>		</div>
-	</div>
-
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-				  							    
-												<th>Loan Fee Category</th>
-												<th>Action</th>	
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php //$no = 1; ?>
-								<?php foreach ($fee_category as $fee_categorys): ?>
-									          <tr>
-				  					<td class="c">
-				  						<?php if ($fee_categorys->fee_category == 'LOAN PRODUCT') {
-				  						 ?>
-				  						 LOAN FEE BY LOAN PRODUCT
-				  						<?php }elseif ($fee_categorys->fee_category == 'GENERAL') {
-				  						 ?>
-				  						 LOAN FEE BY GENERAL
-				  						 <?php } ?>
-				  						<?php //echo $fee_categorys->fee_category; ?>
-				  							
-				  						</td>
-				  					
-				  				<td>	
-				  			<div class="dropdown dropdown-inline">
-			<button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class=""></i> Action  	
-			</button>
-			<div class="dropdown-menu dropdown-menu-right">
-				<ul class="kt-nav">
-					<li class="kt-nav__section kt-nav__section--first">
-						<span class="kt-nav__section-text">Choose an option</span>
-					</li>
-					<li class="kt-nav__item">
-						<a href="#" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_0<?php echo $fee_categorys->id; ?>">
-							<i class="kt-nav__link-icon flaticon-edit" ></i>
-							<span class="kt-nav__link-text">Edit</span>
-						</a>
-					</li>
-					
-					
-				</ul>
-			</div>
-	</div>
-</td>			  											  							
-</tr>
-
-<!--begin::Modal-->
-<div class="modal fade" id="kt_modal_0<?php echo $fee_categorys->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Loan Fee Category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php echo form_open("admin/modify_loanfee_category/{$fee_categorys->id}"); ?>
-                    <div class="form-group">
-                        <label>*Loan Fee Category:</label>
-                       <select type="text" name="fee_category" class="form-control" required>
-						<option value="<?php echo $fee_categorys->fee_category; ?>">
-							<?php if ($fee_categorys->fee_category == 'LOAN PRODUCT') {
-				  						 ?>
-	  						 LOAN FEE BY LOAN PRODUCT
-	  						<?php }elseif ($fee_categorys->fee_category == 'GENERAL') {
-	  						 ?>
-	  						 LOAN FEE BY GENERAL
-	  						 <?php } ?>
-								
-							</option>
-						<option value="LOAN PRODUCT">Loan Fee By Loan Product</option>
-						<option value="GENERAL">Loan Fee By General</option>
-						</select>
-                    </div>
-            </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Update</button>
-
-            </div>
-            <?php echo form_close(); ?>
-        </div>
-    </div>
-</div>
-<!--end::Modal-->
-<?php endforeach; ?>
-									
-	                </tbody>
-                   </table>
-		<!--end: Datatable -->
-	</div>
-</div>
-	</div>
-</div>
-
-
-
-
-
-
-
-
-<?php if (@$fee_category_data->fee_category == 'LOAN PRODUCT') {
- ?>
- <div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-				Loan Category List
-			</h3>
-		</div>
-		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
-
-	
-		<!-- &nbsp;
-		<a href="#" class="btn btn-brand btn-elevate btn-icon-sm">
-			<i class="la la-plus"></i>
-			New Record
-		</a> -->
-	</div>	
-</div>		</div>
-	</div>
-
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-	  							   <th>S/No.</th>
-									<th>Loan Category name</th>
-									<th>Loan level</th>
-									<!-- <th>Loan Return</th> -->
-									<th>Loan Interest</th>
-									<th>Loan Fee Type</th>
-									<th>Loan Fee</th>
-									<th>Action</th>
-				  									
-				  									
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                         <?php $no = 1; ?>
-									<?php foreach ($loan_category as $loan_categorys): ?>
-									          <tr>
-				  					<td><?php echo $no++; ?>.</td>
-				  					<td><?php echo $loan_categorys->loan_name; ?></td>
-				  					<td><?php echo number_format($loan_categorys->loan_price); ?> - <?php echo  number_format($loan_categorys->loan_perday);  ?> </td>
-				  					
-				  					<td><?php echo $loan_categorys->interest_formular; ?>%</td>
-				  					<td>
-				  						<?php if ($loan_categorys->fee_category_type =='MONEY') {
-				  						 ?>
-				  						 MONEY VALUE
-				  						<?php }elseif ($loan_categorys->fee_category_type =='PERCENTAGE') {
-				  						 ?>
-				  						 PERCENTAGE VALUE
-				  						 <?php } ?>
-				  						<?php //echo $loan_categorys->fee_category_type; ?>
-				  							
-				  						</td>
-				  					<td>
-				  						 
-				  					  <?php if ($loan_categorys->fee_category_type =='MONEY') {
-				  						 ?>
-				  						 <?php echo number_format($loan_categorys->fee_value); ?> / Tsh
-				  						<?php }elseif ($loan_categorys->fee_category_type =='PERCENTAGE') {
-				  						 ?>
-				  						<?php echo $loan_categorys->fee_value; ?>%
-				  						 <?php } ?>
-				  						
-				  					</td>
-				  				<td>	
-				  			<div class="dropdown dropdown-inline">
-			<button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class=""></i> Action  	
-			</button>
-			<div class="dropdown-menu dropdown-menu-right">
-				<ul class="kt-nav">
-					<li class="kt-nav__section kt-nav__section--first">
-						<span class="kt-nav__section-text">Choose an option</span>
-					</li>
-					<li class="kt-nav__item">
-						<a href="#" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_<?php echo $loan_categorys->category_id; ?>">
-							<i class="kt-nav__link-icon flaticon-edit" ></i>
-							<span class="kt-nav__link-text">Edit</span>
-						</a>
-					</li>
-					<!-- <li class="kt-nav__item">
-						<a href="<?php //echo base_url("admin/delete_loancategory/{$loan_categorys->category_id}") ?>" class="kt-nav__link" onclick="return confirm('Are you sure?')">
-							<i class="kt-nav__link-icon flaticon-delete"></i>
-							<span class="kt-nav__link-text">Delete</span>
-						</a>
-					</li> -->
-					
-					
-				</ul>
-			</div>
-	</div>
-</td>			  											  							
-</tr>
-
-<!--begin::Modal-->
-<div class="modal fade" id="kt_modal_<?php echo $loan_categorys->category_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Loan Category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php echo form_open("admin/update_loanCategory_loanfee/{$loan_categorys->category_id}"); ?>
-                    <div class="form-group">
-                    	<div class="row">
-                    		<div class="col-lg-3">
-                        <label for="recipient-name" class="form-control-label">*Loan Category Name:</label>
-                        <input type="text" class="form-control" autocomplete="off" name="loan_name" value="<?php echo $loan_categorys->loan_name; ?>">
+                            <input type="hidden" name="comp_id" value="<?php echo htmlspecialchars($_SESSION['comp_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
                         </div>
-                        <div class="col-lg-3">
-                         <label for="recipient-name" class="form-control-label">*From:</label>
-                        <input type="number" class="form-control" autocomplete="off" name="loan_price" value="<?php echo $loan_categorys->loan_price; ?>">
-                         </div>
-                         <div class="col-lg-3">
-                        <label for="recipient-name" class="form-control-label">*To:</label>
-                        <input type="text" class="form-control" autocomplete="off" name="loan_perday" value="<?php echo $loan_categorys->loan_perday; ?>">
-                       </div>
-                         <div class="col-lg-3">
-                        <label for="recipient-name" class="form-control-label">*Loan Interest(%):</label>
-                        <input type="number" class="form-control" autocomplete="off" name="interest_formular" value="<?php echo $loan_categorys->interest_formular; ?>">
-                    </div>
-                    <div class="col-lg-6">
-                    	<label for="recipient-name" class="form-control-label">*Loan Fee Type:</label>
-                    	<select type="text" name="fee_category_type" class="form-control">
-                    		<option value="<?php echo $loan_categorys->fee_category_type; ?>">
-                    			<?php if ($loan_categorys->fee_category_type == TRUE) {
-                    			 ?>
-                    			<?php echo $loan_categorys->fee_category_type; ?>
-                    		<?php }elseif ($loan_categorys->fee_category_type == FALSE) {
-                    		 ?>
-                    		 ---Select Loan Fee Type---
-                    		 <?php } ?>
-                    				
-                    			</option>
-                    		<option value="MONEY">MONEY VALUE</option>
-                    		<option value="PERCENTAGE">PERCENTAGE VALUE</option>
-                    	</select>
-                       </div>
-
-                         <div class="col-lg-6">
-                        <label for="recipient-name" class="form-control-label">*Loan Fee:</label>
-                        <input type="number" class="form-control" autocomplete="off" name="fee_value" value="<?php echo $loan_categorys->fee_value; ?>">
-                    </div>
-                   </div>
+                        <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                            <?php // Your original code had a condition: if ($fee_category == TRUE) {} elseif($fee_category == FALSE){ // show buttons }
+                                  // This usually means: if a category is ALREADY set, don't show "Save" for adding a NEW one.
+                                  // Or, it might mean if the $fee_category *list* is populated.
+                                  // For an "Add" form, buttons are usually always there unless there's a specific reason.
+                                  // I'll assume for now that if NO category is set (i.e., $fee_category_data is null or empty), then show "Save".
+                                  // If one is already set, this form effectively becomes a way to *change* it.
+                            ?>
+                            <?php if (empty($fee_category_data)): // If no fee category is currently set, allow saving a new one ?>
+                                <div class="flex justify-center gap-x-2">
+                                    <button type="submit" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">Save</button>
+                                    <button type="reset" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600">Cancel</button>
+                                </div>
+                            <?php else: ?>
+                                <p class="text-sm text-center text-gray-600 dark:text-gray-400">A fee category is already set. Edit below or change and save.</p>
+                                 <div class="flex justify-center gap-x-2 mt-2">
+                                    <button type="submit" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700 focus:outline-none focus:ring-2 focus:ring-cyan-500">Change Category</button>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php echo form_close(); ?>
+                </div>
             </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Update</button>
 
+            <!-- Card: LOAN FEE CATEGORY List/Display -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                <div class="p-4 md:p-6">
+                    <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">
+                        Current Loan Fee Category
+                    </h3>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Category</th>
+                                    <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <?php if (!empty($fee_category)): ?>
+                                    <?php foreach ($fee_category as $fc_item): // Using fc_item to avoid conflict ?>
+                                    <tr>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                                            <?php echo ($fc_item->fee_category == 'LOAN PRODUCT') ? 'LOAN FEE BY LOAN PRODUCT' : (($fc_item->fee_category == 'GENERAL') ? 'LOAN FEE BY GENERAL' : htmlspecialchars($fc_item->fee_category, ENT_QUOTES, 'UTF-8')); ?>
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                            <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-cyan-600 hover:text-cyan-800 dark:text-cyan-500 dark:hover:text-cyan-400" data-hs-overlay="#hs-edit-feecategory-modal-<?php echo $fc_item->id; ?>">Edit</button>
+                                        </td>
+                                    </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr><td colspan="2" class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">No fee category set.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-            <?php echo form_close(); ?>
+        </div> <!-- End Grid -->
+
+
+        <?php // Conditional Section 1: If Fee Category is "LOAN PRODUCT" ?>
+        <?php if (isset($fee_category_data) && $fee_category_data->fee_category == 'LOAN PRODUCT'): ?>
+        <div class="mt-6 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+            <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Loan Product Fees</h2>
+            </div>
+            <div class="p-4" data-hs-datatable='{ "pageLength": 5, "paging": true, "pagingOptions": { "pageBtnClasses": "min-w-10 h-10 inline-flex justify-center items-center text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 py-2.5 text-sm rounded-full disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:focus:bg-gray-700 dark:hover:bg-gray-700" }}'>
+                 <div class="overflow-x-auto"><div class="min-w-full inline-block align-middle"><div class="border rounded-lg overflow-hidden dark:border-gray-700">
+                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" id="loan_product_fees_table">
+                        <thead class="bg-gray-50 dark:bg-gray-700">
+                            <tr>
+                                <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">S/No.</span></th>
+                                <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Loan Product</span></th>
+                                <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Loan Level</span></th>
+                                <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Interest (%)</span></th>
+                                <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Fee Type</span></th>
+                                <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Fee Value</span></th>
+                                <th scope="col" class="py-3 px-6 text-end"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Action</span></th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            <?php $no_lp = 1; ?>
+                            <?php if(isset($loan_category) && !empty($loan_category)): foreach ($loan_category as $lc_item): ?>
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"><?php echo $no_lp++; ?>.</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($lc_item->loan_name, ENT_QUOTES, 'UTF-8'); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo number_format($lc_item->loan_price) . ' - ' . number_format($lc_item->loan_perday); ?></td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($lc_item->interest_formular, ENT_QUOTES, 'UTF-8'); ?>%</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                    <?php echo ($lc_item->fee_category_type == 'MONEY') ? 'MONEY VALUE' : (($lc_item->fee_category_type == 'PERCENTAGE') ? 'PERCENTAGE VALUE' : htmlspecialchars($lc_item->fee_category_type ?? 'N/A', ENT_QUOTES, 'UTF-8')); ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                    <?php echo ($lc_item->fee_category_type == 'MONEY') ? number_format($lc_item->fee_value ?? 0).' / Tsh' : (($lc_item->fee_category_type == 'PERCENTAGE') ? ($lc_item->fee_value ?? 0).'%' : 'N/A'); ?>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                    <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-cyan-600 hover:text-cyan-800 dark:text-cyan-500 dark:hover:text-cyan-400" data-hs-overlay="#hs-edit-loanproductfee-modal-<?php echo $lc_item->category_id; ?>">Edit Fee</button>
+                                </td>
+                            </tr>
+                            <?php endforeach; else: ?>
+                                <tr><td colspan="7" class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400 data-[dt-styles=dt-empty]:hidden">No loan products found to assign fees.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div></div></div>
+                 <div class="py-3 px-4 border-t border-gray-200 dark:border-gray-700 hidden" data-hs-datatable-paging="">
+                    <nav class="flex items-center space-x-1"><button type="button" class="p-2.5 min-w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" data-hs-datatable-paging-prev=""><span aria-hidden="true">«</span><span class="sr-only">Previous</span></button><div class="flex items-center space-x-1 [&>.active]:bg-gray-100 dark:[&>.active]:bg-gray-700" data-hs-datatable-paging-pages=""></div><button type="button" class="p-2.5 min-w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" data-hs-datatable-paging-next=""><span class="sr-only">Next</span><span aria-hidden="true">»</span></button></nav>
+                </div>
+            </div>
         </div>
+        <?php endif; ?>
+        <!-- End Conditional Section 1 -->
+
+
+        <?php // Conditional Section 2: If Fee Category is "GENERAL" ?>
+        <?php if (isset($fee_category_data) && $fee_category_data->fee_category == 'GENERAL'): ?>
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Card: ADD LOAN FEE TYPE Form -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Set General Loan Fee Type</h3>
+                        <?php echo form_open("admin/create_loanfee_type", ['novalidate' => true]); ?>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="general_fee_type_select" class="block text-sm font-medium mb-2 dark:text-gray-300">Loan Fee Type*:</label>
+                                     <select id="general_fee_type_select" name="type" required
+                                        data-hs-select='{ "placeholder": "---Select Loan fee Type---", /* ... other hs-select options ... */ }'
+                                        class="py-2.5 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                                        <option value="">---Select Loan fee Type---</option>
+                                        <option value="MONEY VALUE" <?php echo set_select('type', 'MONEY VALUE'); ?>>MONEY VALUE</option>
+                                        <option value="PERCENTAGE VALUE" <?php echo set_select('type', 'PERCENTAGE VALUE'); ?>>PERCENTAGE VALUE</option>
+                                    </select>
+                                    <?php echo form_error("type", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
+                                </div>
+                                <input type="hidden" name="comp_id" value="<?php echo htmlspecialchars($_SESSION['comp_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                <?php // This logic might mean: if a general fee type is ALREADY set, don't show "Save" for adding a NEW one for this type.
+                                      // Or it allows changing the single general fee type.
+                                ?>
+                                <?php if (empty($fee_type)): // If no general fee type is set ?>
+                                    <div class="flex justify-center gap-x-2">
+                                        <button type="submit" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700">Save Type</button>
+                                        <button type="reset" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600">Cancel</button>
+                                    </div>
+                                <?php else: ?>
+                                     <p class="text-sm text-center text-gray-600 dark:text-gray-400">A general fee type is already set. Edit below or change and save.</p>
+                                     <div class="flex justify-center gap-x-2 mt-2">
+                                        <button type="submit" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700">Change Type</button>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+
+                <!-- Card: LOAN FEE TYPE List/Display -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Current General Loan Fee Type</h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                <thead class="bg-gray-50 dark:bg-gray-700">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Type</th>
+                                        <th scope="col" class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                    <?php if (!empty($fee_data)): // $fee_data should contain the currently set general fee type ?>
+                                        <?php foreach ($fee_data as $ft_item): ?>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($ft_item->type, ENT_QUOTES, 'UTF-8'); ?></td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                                <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-cyan-600 hover:text-cyan-800 dark:text-cyan-500 dark:hover:text-cyan-400" data-hs-overlay="#hs-edit-feetype-modal-<?php echo $ft_item->id; ?>">Edit</button>
+                                            </td>
+                                        </tr>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <tr><td colspan="2" class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400">No general fee type set.</td></tr>
+                                    <?php endif; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End grid for general fee type -->
+
+            <!-- General Loan Fees - Form and Table -->
+            <?php if (isset($fee_type) && !empty($fee_type)): // Show this only if a general fee type is set ?>
+            <div class="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Card: ADD GENERAL LOAN FEE Form -->
+                 <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="p-4 md:p-6">
+                        <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Add General Loan Fee</h3>
+                        <?php echo form_open("admin/create_loan_fee", ['novalidate' => true]); ?>
+                            <div class="grid sm:grid-cols-12 gap-4">
+                                <div class="sm:col-span-6">
+                                    <label for="general_fee_desc" class="block text-sm font-medium mb-2 dark:text-gray-300">*Description:</label>
+                                    <input type="text" id="general_fee_desc" placeholder="Description" name="description" required autocomplete="off" class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" value="<?php echo set_value('description'); ?>">
+                                     <?php echo form_error("description", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
+                                </div>
+                                <div class="sm:col-span-6">
+                                    <label for="general_fee_interest" class="block text-sm font-medium mb-2 dark:text-gray-300">
+                                        *Loan Fee 
+                                        <?php if ($fee_type->type == 'MONEY VALUE') echo 'in (Tsh)'; elseif ($fee_type->type == 'PERCENTAGE VALUE') echo 'in (%)'; ?>:
+                                    </label>
+                                    <input type="number" <?php if ($fee_type->type == 'PERCENTAGE VALUE') echo 'step="0.01"'; ?> id="general_fee_interest" required class="py-2.5 px-4 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" placeholder="Fee Value" name="fee_interest" autocomplete="off" value="<?php echo set_value('fee_interest'); ?>">
+                                    <?php echo form_error("fee_interest", '<p class="text-xs text-red-600 mt-2">', '</p>'); ?>
+                                </div>
+                            </div>
+                            <input type="hidden" name="comp_id" value="<?php echo htmlspecialchars($_SESSION['comp_id'] ?? '', ENT_QUOTES, 'UTF-8'); ?>">
+                            <div class="mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+                                <div class="flex justify-center gap-x-2">
+                                    <button type="submit" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-cyan-600 text-white hover:bg-cyan-700">Save Fee</button>
+                                    <button type="reset" class="py-2 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600">Cancel</button>
+                                </div>
+                            </div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+
+                <!-- Card: GENERAL LOAN FEE List -->
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                     <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700"><h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">General Loan Fees List</h2></div>
+                    <div class="p-4" data-hs-datatable='{ "pageLength": 5, "paging": true, "pagingOptions": { /* ... */ } }'>
+                        <div class="overflow-x-auto"><div class="min-w-full inline-block align-middle"><div class="border rounded-lg overflow-hidden dark:border-gray-700">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700" id="general_loan_fees_table">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Description</span></th>
+                                    <th scope="col" class="py-3 px-6 text-start"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Loan Fee In <?php if ($fee_type->type == 'MONEY VALUE') echo 'Tsh'; elseif ($fee_type->type == 'PERCENTAGE VALUE') echo '%'; ?></span></th>
+                                    <th scope="col" class="py-3 px-6 text-end"><span class="text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Action</span></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <?php if(isset($loan_fee) && !empty($loan_fee)): foreach($loan_fee as $lf_item): ?>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200"><?php echo htmlspecialchars($lf_item->description, ENT_QUOTES, 'UTF-8'); ?></td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                        <?php echo ($fee_type->type == 'MONEY VALUE') ? number_format($lf_item->fee_interest) . ' / Tsh' : htmlspecialchars($lf_item->fee_interest, ENT_QUOTES, 'UTF-8') . ' %'; ?>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                        <button type="button" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-cyan-600 hover:text-cyan-800 dark:text-cyan-500 dark:hover:text-cyan-400" data-hs-overlay="#hs-edit-generalfee-modal-<?php echo $lf_item->fee_id; ?>">Edit</button>
+                                        <a href="<?php echo base_url("admin/delete_loan_fee/{$lf_item->fee_id}"); ?>" onclick="return confirm('Are you sure?')" class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-red-600 hover:text-red-800 dark:text-red-500 dark:hover:text-red-400 ms-2">Delete</a>
+                                    </td>
+                                </tr>
+                                <?php endforeach; else: ?>
+                                 <tr><td colspan="3" class="px-6 py-4 text-center text-sm text-gray-500 dark:text-gray-400 data-[dt-styles=dt-empty]:hidden">No general loan fees defined.</td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                        </div></div></div>
+                         <div class="py-3 px-4 border-t border-gray-200 dark:border-gray-700 hidden" data-hs-datatable-paging="">
+                            <nav class="flex items-center space-x-1"><button type="button" class="p-2.5 min-w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" data-hs-datatable-paging-prev=""><span aria-hidden="true">«</span><span class="sr-only">Previous</span></button><div class="flex items-center space-x-1 [&>.active]:bg-gray-100 dark:[&>.active]:bg-gray-700" data-hs-datatable-paging-pages=""></div><button type="button" class="p-2.5 min-w-10 h-10 inline-flex justify-center items-center gap-x-2 text-sm rounded-full text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:bg-gray-700" data-hs-datatable-paging-next=""><span class="sr-only">Next</span><span aria-hidden="true">»</span></button></nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        <?php // End Conditional Section 2 ?>
+
+
+        <?php // Modals (Place all modals at the end or outside the conditional blocks for clarity) ?>
+        <!-- Modal for Edit Loan Fee Category -->
+        <?php if (!empty($fee_category)): foreach ($fee_category as $fc_item): ?>
+        <div id="hs-edit-feecategory-modal-<?php echo $fc_item->id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+            <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700"><h3 class="font-bold text-gray-800 dark:text-white">Edit Loan Fee Category</h3><button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-feecategory-modal-<?php echo $fc_item->id; ?>"><span class="sr-only">Close</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+                    <div class="p-4 overflow-y-auto">
+                        <?php echo form_open("admin/modify_loanfee_category/{$fc_item->id}"); ?>
+                            <label for="modal_fee_category_<?php echo $fc_item->id; ?>" class="block text-sm font-medium mb-2 dark:text-gray-300">Loan Fee Category*:</label>
+                            <select id="modal_fee_category_<?php echo $fc_item->id; ?>" name="fee_category" required class="py-2.5 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                                data-hs-select='{ "placeholder": "---Select Loan fee Category---", /* ... other hs-select options ... */ }'>
+                                <option value="LOAN PRODUCT" <?php echo ($fc_item->fee_category == 'LOAN PRODUCT') ? 'selected' : ''; ?>>Loan Fee By Loan Product</option>
+                                <option value="GENERAL" <?php echo ($fc_item->fee_category == 'GENERAL') ? 'selected' : ''; ?>>Loan Fee By General</option>
+                            </select>
+                            <div class="mt-6 flex justify-end gap-x-2"><button type="button" class="py-2 px-3 btn-secondary-sm" data-hs-overlay="#hs-edit-feecategory-modal-<?php echo $fc_item->id; ?>">Close</button><button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Update</button></div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; endif; ?>
+
+        <!-- Modal for Edit Loan Product Fee -->
+        <?php if (isset($loan_category) && !empty($loan_category)): foreach ($loan_category as $lc_item): ?>
+        <div id="hs-edit-loanproductfee-modal-<?php echo $lc_item->category_id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+            <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-2xl lg:w-full m-3 lg:mx-auto"> <?php // Wider modal ?>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700"><h3 class="font-bold text-gray-800 dark:text-white">Edit Fee for: <?php echo htmlspecialchars($lc_item->loan_name); ?></h3><button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-loanproductfee-modal-<?php echo $lc_item->category_id; ?>"><span class="sr-only">Close</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+                    <div class="p-4 overflow-y-auto">
+                        <?php echo form_open("admin/update_loanCategory_loanfee/{$lc_item->category_id}"); ?>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div><label class="block text-sm dark:text-gray-300">Loan Category Name:</label><input type="text" name="loan_name" value="<?php echo htmlspecialchars($lc_item->loan_name); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></div>
+                                <div><label class="block text-sm dark:text-gray-300">From (Min Amount):</label><input type="number" name="loan_price" value="<?php echo htmlspecialchars($lc_item->loan_price); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></div>
+                                <div><label class="block text-sm dark:text-gray-300">To (Max Amount):</label><input type="number" name="loan_perday" value="<?php echo htmlspecialchars($lc_item->loan_perday); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></div>
+                                <div><label class="block text-sm dark:text-gray-300">Loan Interest (%):</label><input type="number" step="0.01" name="interest_formular" value="<?php echo htmlspecialchars($lc_item->interest_formular); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></div>
+                                <div>
+                                    <label class="block text-sm dark:text-gray-300">*Loan Fee Type:</label>
+                                    <select name="fee_category_type" class="py-2.5 px-4 pe-9 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" data-hs-select='{/* Preline Select options */}'>
+                                        <option value="MONEY" <?php echo ($lc_item->fee_category_type == 'MONEY') ? 'selected' : ''; ?>>MONEY VALUE</option>
+                                        <option value="PERCENTAGE" <?php echo ($lc_item->fee_category_type == 'PERCENTAGE') ? 'selected' : ''; ?>>PERCENTAGE VALUE</option>
+                                    </select>
+                                </div>
+                                <div><label class="block text-sm dark:text-gray-300">*Loan Fee Value:</label><input type="number" step="0.01" name="fee_value" value="<?php echo htmlspecialchars($lc_item->fee_value ?? ''); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></div>
+                            </div>
+                            <div class="mt-6 flex justify-end gap-x-2"><button type="button" class="py-2 px-3 btn-secondary-sm" data-hs-overlay="#hs-edit-loanproductfee-modal-<?php echo $lc_item->category_id; ?>">Close</button><button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Update Fee</button></div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; endif; ?>
+
+        <!-- Modal for Edit General Loan Fee Type -->
+        <?php if(isset($fee_data) && !empty($fee_data)): foreach ($fee_data as $ft_item): ?>
+        <div id="hs-edit-feetype-modal-<?php echo $ft_item->id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+            <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                 <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700"><h3 class="font-bold text-gray-800 dark:text-white">Edit General Loan Fee Type</h3><button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-feetype-modal-<?php echo $ft_item->id; ?>"><span class="sr-only">Close</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+                    <div class="p-4 overflow-y-auto">
+                        <?php echo form_open("admin/modify_loanfee_type/{$ft_item->id}"); ?>
+                            <label class="block text-sm font-medium mb-2 dark:text-gray-300">*Loan Fee Type:</label>
+                            <select name="type" required class="py-2.5 px-4 pe-9 block w-full border-gray-200 rounded-lg text-sm focus:border-cyan-500 focus:ring-cyan-500 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                                data-hs-select='{ "placeholder": "---Select Loan fee Type---", /* ... */ }'>
+                                <option value="MONEY VALUE" <?php echo ($ft_item->type == 'MONEY VALUE') ? 'selected' : ''; ?>>MONEY VALUE</option>
+                                <option value="PERCENTAGE VALUE" <?php echo ($ft_item->type == 'PERCENTAGE VALUE') ? 'selected' : ''; ?>>PERCENTAGE VALUE</option>
+                            </select>
+                            <div class="mt-6 flex justify-end gap-x-2"><button type="button" class="py-2 px-3 btn-secondary-sm" data-hs-overlay="#hs-edit-feetype-modal-<?php echo $ft_item->id; ?>">Close</button><button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Update Type</button></div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; endif; ?>
+
+        <!-- Modal for Edit General Loan Fee -->
+        <?php if (isset($loan_fee) && !empty($loan_fee)): foreach ($loan_fee as $lf_item): ?>
+         <div id="hs-edit-generalfee-modal-<?php echo $lf_item->fee_id; ?>" class="hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto">
+            <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto">
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700">
+                    <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700"><h3 class="font-bold text-gray-800 dark:text-white">Edit Loan Fee</h3><button type="button" class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" data-hs-overlay="#hs-edit-generalfee-modal-<?php echo $lf_item->fee_id; ?>"><span class="sr-only">Close</span><svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></div>
+                    <div class="p-4 overflow-y-auto">
+                        <?php echo form_open("admin/modify_loan_fee/{$lf_item->fee_id}"); ?>
+                            <div class="space-y-4">
+                                <div><label class="block text-sm dark:text-gray-300">*Description:</label><input type="text" name="description" value="<?php echo htmlspecialchars($lf_item->description); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required></div>
+                                <div>
+                                    <label class="block text-sm dark:text-gray-300">*Loan Fee <?php if (isset($fee_type) && $fee_type->type == 'MONEY VALUE') echo 'in Tsh'; elseif (isset($fee_type) && $fee_type->type == 'PERCENTAGE VALUE') echo 'in %'; ?>:</label>
+                                    <input type="number" <?php if (isset($fee_type) && $fee_type->type == 'PERCENTAGE VALUE') echo 'step="0.01"'; ?> name="fee_interest" value="<?php echo htmlspecialchars($lf_item->fee_interest); ?>" class="py-2.5 px-4 input-text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" required>
+                                </div>
+                            </div>
+                            <div class="mt-6 flex justify-end gap-x-2"><button type="button" class="py-2 px-3 btn-secondary-sm" data-hs-overlay="#hs-edit-generalfee-modal-<?php echo $lf_item->fee_id; ?>">Close</button><button type="submit" class="py-2 px-3 btn-primary-sm bg-cyan-600 hover:bg-cyan-700 text-white">Update Fee</button></div>
+                        <?php echo form_close(); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; endif; ?>
+        <!-- End Modals -->
+
+
     </div>
 </div>
-<!--end::Modal-->
-<?php endforeach; ?>
-									
-	                </tbody>
-	                <tfoot>
-                    <tr>
-               <th>S/No.</th>
-			<th>Loan Category name</th>
-			<th>Loan level</th>
-			<!-- <th>Loan Return</th> -->
-			<th>Loan Interest</th>
-			<th>Loan Fee Type</th>
-			<th>Loan Fee</th>
-			<th>Action</th>
-                    </tr>
-                   </tfoot>
-                   </table>
-		<!--end: Datatable -->
-	</div>
-</div>
-<?php }elseif (@$fee_category_data->fee_category == 'GENERAL') {
- ?>
-<div class="row">
-	<div class="col-lg-6">
-		<div class="kt-portlet">
-			<div class="kt-portlet__head">
-				<div class="kt-portlet__head-label">
-					<h3 class="kt-portlet__head-title">
-						ADD LOAN FEE TYPE
-					</h3>
-				</div>
-			</div>
-			<!--begin::Form-->
-			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
-				<?php echo form_open("admin/create_loanfee_type",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
-				<div class="kt-portlet__body">
-					<div class="kt-section">
-						<div class="kt-section__content">
-							<div class="form-group form-group-last row">
-								<div class="col-lg-12 form-group-sub">
-									<label class="form-control-label">Loan Fee Type*:</label>
-									<select type="text" name="type" class="form-control" required>
-										<option value="">---Select Loan fee Type---</option>
-										<option value="MONEY VALUE">MONEY VALUE</option>
-										<option value="PERCENTAGE VALUE">PERCENTAGE VALUE</option>
-									</select>
-								</div>
-								
-								<input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="kt-portlet__foot">
-					<div class="kt-form__actions">
-						<div class="row">
-							<div class="col-lg-12">
-								<?php if ($fee_type == TRUE) {
-								 ?>
-								<?php }elseif($fee_type == FALSE){ ?>
-								<div class="text-center">
-								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Save</button>
-								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
-								</div>
-								<?php } ?>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php echo form_close(); ?>
-			<!--end::Form-->
-		</div>
-		<!--end::Portlet-->
-	</div>
-	<div class="col-lg-6">
-		<div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-				LOAN FEE TYPE
-			</h3>
-		</div>
-		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
+<!-- ========== END MAIN CONTENT BODY ========== -->
 
-	
-		<!-- &nbsp;
-		<a href="#" class="btn btn-brand btn-elevate btn-icon-sm">
-			<i class="la la-plus"></i>
-			New Record
-		</a> -->
-	</div>	
-</div>		</div>
-	</div>
+<?php
+include_once APPPATH . "views/partials/footer.php";
+?>
 
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-				  							    
-												<th>Loan Fee Type</th>
-												<th>Action</th>	
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php //$no = 1; ?>
-								<?php foreach ($fee_data as $fee_types): ?>
-									          <tr>
-				  					<td><?php echo $fee_types->type; ?></td>
-				  					
-				  				<td>	
-				  			<div class="dropdown dropdown-inline">
-			<button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class=""></i> Action  	
-			</button>
-			<div class="dropdown-menu dropdown-menu-right">
-				<ul class="kt-nav">
-					<li class="kt-nav__section kt-nav__section--first">
-						<span class="kt-nav__section-text">Choose an option</span>
-					</li>
-					<li class="kt-nav__item">
-						<a href="#" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_1<?php echo $fee_types->id; ?>">
-							<i class="kt-nav__link-icon flaticon-edit" ></i>
-							<span class="kt-nav__link-text">Edit</span>
-						</a>
-					</li>
-					
-					
-				</ul>
-			</div>
-	</div>
-</td>			  											  							
-</tr>
-
-<!--begin::Modal-->
-<div class="modal fade" id="kt_modal_1<?php echo $fee_types->id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Loan Fee Type</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php echo form_open("admin/modify_loanfee_type/{$fee_types->id}"); ?>
-                    <div class="form-group">
-                        <label>*Loan Fee Type:</label>
-                       <select type="text" name="type" class="form-control" required>
-						<option value="<?php echo $fee_types->type; ?>"><?php echo $fee_types->type; ?></option>
-						<option value="MONEY VALUE">MONEY VALUE</option>
-						<option value="PERCENTAGE VALUE">PERCENTAGE VALUE</option>
-						</select>
-                    </div>
-            </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Update</button>
-
-            </div>
-            <?php echo form_close(); ?>
-        </div>
-    </div>
-</div>
-<!--end::Modal-->
-<?php endforeach; ?>
-									
-	                </tbody>
-                   </table>
-		<!--end: Datatable -->
-	</div>
-</div>
-	</div>
-</div>
-
-
-
-
-
-
-<div class="row">
-	<div class="col-lg-6">
-		<div class="kt-portlet">
-			<div class="kt-portlet__head">
-				<div class="kt-portlet__head-label">
-					<h3 class="kt-portlet__head-title">
-						ADD LOAN FEE
-					</h3>
-				</div>
-			</div>
-			<!--begin::Form-->
-			<!-- <form method="post" action="ss" class="kt-form kt-form--label-right" id="kt_form_2"> -->
-				<?php echo form_open("admin/create_loan_fee",['class'=>'kt-form kt-form--label-right','novalidate']); ?>
-				<div class="kt-portlet__body">
-					<div class="kt-section">
-						<div class="kt-section__content">
-							<div class="form-group form-group-last row">
-								<div class="col-lg-6 form-group-sub">
-									<label class="form-control-label">*Description:</label>
-									<input type="text" placeholder="Description" class="form-control" name="description" required autocomplete="off">
-								</div>
-								
-								<input type="hidden" name="comp_id" value="<?php echo $_SESSION['comp_id']; ?>">
-								<div class="col-lg-6 form-group-sub">
-									<?php if (@$fee_type->type == 'MONEY VALUE') {
-									 ?>
-									 <label  class="form-control-label">*Loan Fee in (Tsh):</label>
-									<input type="text" required class="form-control" placeholder="Loan Fee in (Tsh)" name="fee_interest" autocomplete="off" >
-									<?php }elseif (@$fee_type->type == 'PERCENTAGE VALUE') {
-									 ?>
-									<label  class="form-control-label">*Loan Fee in (%):</label>
-									<input type="text" required class="form-control" placeholder="Loan Fee in (%)" name="fee_interest" autocomplete="off" >
-									<?php }else{ ?>
-									<label  class="form-control-label">*Loan Fee:</label>
-									<input type="text" required class="form-control" required readonly placeholder="Loan Fee" name="" autocomplete="off" >
-									<?php } ?>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="kt-portlet__foot">
-					<div class="kt-form__actions">
-						<div class="row">
-							<div class="col-lg-12">
-								<div class="text-center">
-								<button type="submit" class="btn btn-brand  btn-elevate btn-pill btn-sm">Save</button>
-								<button type="reset" class="btn btn-danger btn-elevate btn-pill btn-sm">Cancel</button>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			<?php echo form_close(); ?>
-			<!--end::Form-->
-		</div>
-		<!--end::Portlet-->
-	</div>
-	<div class="col-lg-6">
-		<div class="kt-portlet kt-portlet--mobile">
-	<div class="kt-portlet__head kt-portlet__head--lg">
-		<div class="kt-portlet__head-label">
-			<span class="kt-portlet__head-icon">
-				<i class="kt-font-brand flaticon-list-2"></i>
-			</span>
-			<h3 class="kt-portlet__head-title">
-				LOAN FEE
-			</h3>
-		</div>
-		<div class="kt-portlet__head-toolbar">
-            <div class="kt-portlet__head-wrapper">
-	<div class="kt-portlet__head-actions">
-
-	
-		<!-- &nbsp;
-		<a href="#" class="btn btn-brand btn-elevate btn-icon-sm">
-			<i class="la la-plus"></i>
-			New Record
-		</a> -->
-	</div>	
-</div>		</div>
-	</div>
-
-	<div class="kt-portlet__body">
-		<!--begin: Datatable -->
-		<table class="table table-striped- table-bordered table-hover table-checkable" id="kt_table_1">
-									     <thead>
-			  						          <tr>
-				  							    
-												<th>Description</th>
-												<th>Loan Fee In 
-										<?php if (@$fee_type->type == 'MONEY VALUE') {
-				  						 ?>
-				  						 Tsh
-				  						<?php }elseif (@$fee_type->type == 'PERCENTAGE VALUE') {
-				  						 ?>
-				  					       %
-				  						<?php }else{ ?>
-
-				  							<?php } ?></th>
-												<th>Action</th>	
-				  						         </tr>
-						                  </thead>
-			
-								    <tbody>
-                                          <?php //$no = 1; ?>
-									<?php foreach ($loan_fee as $loan_fees): ?>
-									          <tr>
-				  					<td><?php echo $loan_fees->description; ?></td>
-				  					<td>
-				  						  
-				  						<?php if (@$fee_type->type == 'MONEY VALUE') {
-				  						 ?>
-				  						<?php echo number_format($loan_fees->fee_interest); ?> / Tsh
-				  						<?php }elseif (@$fee_type->type == 'PERCENTAGE VALUE') {
-				  						 ?>
-				  						<?php echo $loan_fees->fee_interest; ?> %
-				  						<?php }else{ ?>
-
-				  							<?php } ?>
-				  					</td>
-				  					
-				  				<td>	
-				  			<div class="dropdown dropdown-inline">
-			<button type="button" class="btn btn-info  btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<i class=""></i> Action  	
-			</button>
-			<div class="dropdown-menu dropdown-menu-right">
-				<ul class="kt-nav">
-					<li class="kt-nav__section kt-nav__section--first">
-						<span class="kt-nav__section-text">Choose an option</span>
-					</li>
-					<li class="kt-nav__item">
-						<a href="#" class="kt-nav__link" data-toggle="modal" data-target="#kt_modal_<?php echo $loan_fees->fee_id; ?>">
-							<i class="kt-nav__link-icon flaticon-edit" ></i>
-							<span class="kt-nav__link-text">Edit</span>
-						</a>
-					</li>
-					<li class="kt-nav__item">
-						<a href="<?php echo base_url("admin/delete_loan_fee/{$loan_fees->fee_id}") ?>" class="kt-nav__link" onclick="return confirm('Are you sure?')">
-							<i class="kt-nav__link-icon flaticon-delete"></i>
-							<span class="kt-nav__link-text">Delete</span>
-						</a>
-					</li>
-					
-					
-				</ul>
-			</div>
-	</div>
-</td>			  											  							
-</tr>
-
-<!--begin::Modal-->
-<div class="modal fade" id="kt_modal_<?php echo $loan_fees->fee_id; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Loan Fee</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                </button>
-            </div>
-            <div class="modal-body">
-                <?php echo form_open("admin/modify_loan_fee/{$loan_fees->fee_id}"); ?>
-                    <div class="form-group">
-                        <label for="recipient-name" class="form-control-label">*Description:</label>
-                        <input type="text" class="form-control" autocomplete="off" name="description" value="<?php echo $loan_fees->description; ?>">
-                        
-                         <label for="recipient-name" class="form-control-label">*Loan Fee in
-                          <?php if (@$fee_type->type == 'MONEY VALUE') {
-				  						 ?>
-				  						 Tsh
-				  						<?php }elseif (@$fee_type->type == 'PERCENTAGE VALUE') {
-				  						 ?>
-				  					       %
-				  						<?php }else{ ?>
-
-				  							<?php } ?>:</label>
-                        <input type="text" class="form-control" autocomplete="off" name="fee_interest" value="<?php echo $loan_fees->fee_interest; ?>">
-                    </div>
-                   
-            </div>
-            <div class="modal-footer">
-               
-                <button type="submit" class="btn btn-primary">Update</button>
-
-            </div>
-            <?php echo form_close(); ?>
-        </div>
-    </div>
-</div>
-<!--end::Modal-->
-<?php endforeach; ?>
-									
-	                </tbody>
-                   </table>
-		<!--end: Datatable -->
-	</div>
-</div>
-	</div>
-</div>
-
-<?php }else{ ?>
-
-
-	<?php } ?>
-
-
-
-
-
-
-
-</div>
-<!-- end:: Content -->
-<!-- end:: Content -->
-				</div>				
-				
-<?php include('incs/footer_1.php') ?>
-
+<?php // Script for cmd+a fix and Preline Select initialization (if needed) ?>
 <script>
-    $('.select2').select2();
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    // Cmd+A fix for DataTables search inputs
+    const searchInputs = document.querySelectorAll('input[data-hs-datatable-search]');
+    searchInputs.forEach((input) => {
+      input.addEventListener('keydown', function (evt) {
+        if ((evt.metaKey || evt.ctrlKey) && (evt.key === 'a' || evt.key === 'A')) {
+          this.select();
+        }
+      });
+    });
+
+    // Preline components are usually auto-initialized by preline.js
+    // If you find selects not working, you might need:
+    // HSStaticMethods.autoInit(['select']); // Or specific IDs
+  }, 500);
+});
 </script>

@@ -1,6 +1,4 @@
 <?php
-// new_dashboard_view.php
-
 include_once APPPATH . "views/partials/header.php";
 ?>
 
@@ -203,6 +201,7 @@ include_once APPPATH . "views/partials/header.php";
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     <?php
                     // --- DUMMY DATA for quick stats - REMOVE and use controller data ---
+                    // TODO: !! IMPORTANT, COMMENTED THESE BECAUSE OF TABLE MISSING ERROR, SHOULD BE UNCOMMENTED
                     $comp_id = $_SESSION['comp_id'] ?? null;
                     // Simulating data fetching - this should be in your controller
                    $employee_count = $comp_id ? ($this->db->query("SELECT COUNT(*) as count FROM tbl_employee WHERE comp_id = ?", [$comp_id])->row()->count ?? 0) : 0;

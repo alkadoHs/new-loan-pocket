@@ -1,5 +1,20 @@
   <!-- JS Implementing Plugins -->
 
+   <!-- jQuery (required by DataTables.net) -->
+   <script src="<?php echo base_url('node_modules/jquery/dist/jquery.min.js'); ?>"></script>
+
+<!-- DataTables.net Core JS -->
+<script src="<?php echo base_url('node_modules/datatables.net/js/dataTables.min.js'); ?>"></script>
+
+<?php // Optional: DataTables.net Buttons (if using export functionality) ?>
+<script src="<?php echo base_url('node_modules/datatables.net-buttons/js/dataTables.buttons.min.js'); ?>"></script>
+<script src="<?php echo base_url('node_modules/jszip/dist/jszip.min.js'); ?>"></script>
+<script src="<?php echo base_url('node_modules/pdfmake/build/pdfmake.min.js'); ?>"></script>
+<script src="<?php echo base_url('node_modules/pdfmake/build/vfs_fonts.js'); ?>"></script>
+<script src="<?php echo base_url('node_modules/datatables.net-buttons/js/buttons.html5.min.js'); ?>"></script>
+<script src="<?php echo base_url('node_modules/datatables.net-buttons/js/buttons.print.min.js'); ?>"></script>
+
+
   <!-- JS PLUGINS -->
   <!-- Required plugins -->
   <script src="<?php echo base_url('public/js/preline.js') ?>"></script>

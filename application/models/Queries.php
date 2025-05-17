@@ -89,6 +89,9 @@ public function remove_position($position_id){
 
 
 public function update_blanch($data,$blanch_id){
+	if (!$blanch_id) {
+		return false;
+	}
 	return $this->db->where('blanch_id',$blanch_id)->update('tbl_blanch',$data);
 }
 

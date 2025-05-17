@@ -771,3 +771,14 @@
     @slot;
   }
 }
+
+
+.dt-layout-row:has(.dt-search),
+.dt-layout-row:has(.dt-length),
+.dt-layout-row:has(.dt-paging) {
+  display: none !important;
+}
+/* Optional: CSS for scrollable body if you use that feature */
+.dt-scroll-body thead {
+  display: none !important;
+}
