@@ -1,5 +1,4 @@
 <?php
-// application/views/partials/sidebar.php
 
 // Helper function to determine if a link is active (basic example)
 // You might have a more sophisticated way to manage this, perhaps passing $active_page from controller
@@ -53,7 +52,7 @@ $communication_submenu_active = is_submenu_active(['send_email']); // Assuming S
   fixed inset-y-0 start-0 z-40
   lg:block lg:translate-x-0 lg:end-auto lg:bottom-0
   border-e border-gray-200
-  bg-white dark:bg-gray-800 dark:border-gray-700">
+  bg-white dark:bg-gray-800 dark:border-gray-700 overflow-auto">
 
   <div class="px-6 pt-4 pb-2 border-b border-gray-200 dark:border-gray-700">
     <!-- Logo -->

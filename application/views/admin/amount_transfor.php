@@ -1,6 +1,4 @@
 <?php
-// application/views/admin/transfer_amount_view.php (renamed for clarity)
-
 include_once APPPATH . "views/partials/header.php";
 
 // --- DUMMY DATA ---

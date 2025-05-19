@@ -944,6 +944,9 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+  .overflow-auto {
+    overflow: auto;
+  }
   .overflow-hidden {
     overflow: hidden;
   }
@@ -1136,9 +1139,6 @@
   }
   .fill-black {
     fill: var(--color-black);
-  }
-  .fill-current {
-    fill: currentcolor;
   }
   .p-1 {
     padding: calc(var(--spacing) * 1);
