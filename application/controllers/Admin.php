@@ -6085,7 +6085,7 @@ $data_exp_category = $this->queries->get_expenses_category_total($comp_id);
 		$comp_id = $this->session->userdata('comp_id');
 		$income = $this->queries->get_income($comp_id);
 		   // print_r($income);
-		   //      exit();
+		   // exit();
 		$this->load->view('admin/income',['income'=>$income]);
 	}
 
@@ -8536,13 +8536,11 @@ public function check_miamala($id){
 	}
 
 
-function fetch_account_blanch(){
-$this->load->model('queries');
-if($this->input->post('blanch_id'))
-{
-echo $this->queries->fetch_acount($this->input->post('blanch_id'));
-}
-
+public function fetch_account_blanch(){
+	$blanch_id = $this->input->post('blanch_id');
+    $this->load->model('queries');
+    $html_options = $this->queries->fetch_acount($blanch_id); // Model returns HTML string
+    echo $html_options;
 }
 
 

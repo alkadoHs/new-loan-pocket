@@ -2,12 +2,6 @@
 include_once APPPATH . "views/partials/header.php";
 
 // --- DUMMY DATA ---
-// Your controller should pass:
-// $account: array of account objects (trans_id, account_name) for "From" and "To" account dropdowns
-// $blanch: array of branch objects (blanch_id, blanch_name) for "To Branch" dropdown
-// $float: array of float transfer records (from_account, blanch_amount, blanch_name, to_account, charger, trans_day, trans_id, comp_id)
-// $sum_froat: object with 'cashFloat' property
-// $sum_chargers: object with 'total_chargers' property
 
 // if (!isset($account)) {
 //     $account = [
